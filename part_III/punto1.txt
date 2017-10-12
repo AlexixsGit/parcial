@@ -1,2 +1,5 @@
-SELECT COUNT(REFERENCE) FROM PRODUCTS where CATEGORY_ID in 
-(select id from CATEGORIES where CATEGORIES.NAME = 'shoes' and CATEGORIES.SEASON = 'summer');
+create tablespace HACEB datafile 'haceb.dbf' size 100m
+autoextend on maxsize 100m
+extent management local
+segment space management auto
+online;
