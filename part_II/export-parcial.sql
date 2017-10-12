@@ -2,6 +2,11 @@
 -- Archivo creado  - miércoles-octubre-11-2017   
 --------------------------------------------------------
 --------------------------------------------------------
+--  DDL for Sequence ANSWERS_SEQ
+--------------------------------------------------------
+
+   CREATE SEQUENCE  "ANSWERS_SEQ"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE
+--------------------------------------------------------
 --  DDL for Sequence LOGMNR_EVOLVE_SEQ$
 --------------------------------------------------------
 
@@ -105,17 +110,31 @@
 --  DDL for Table ANSWERS
 --------------------------------------------------------
 
-  CREATE TABLE "ANSWERS" ("ID" NUMBER(*,0), "NUMBER_OF_QUESTION" VARCHAR2(255), "ANSWER" VARCHAR2(255))
---------------------------------------------------------
---  DDL for Table PRODUCTS
---------------------------------------------------------
-
-  CREATE TABLE "PRODUCTS" ("ID" NUMBER(*,0), "NAME" VARCHAR2(255), "REFERENCE" VARCHAR2(255), "PRICE" NUMBER(10,3), "CATEGORY_ID" NUMBER(*,0))
+  CREATE TABLE "ANSWERS" 
+   (	"ID" NUMBER(*,0), 
+	"NUMBER_OF_QUESTION" VARCHAR2(255), 
+	"ANSWER" VARCHAR2(255)
+   )
 --------------------------------------------------------
 --  DDL for Table CATEGORIES
 --------------------------------------------------------
 
-  CREATE TABLE "CATEGORIES" ("ID" NUMBER(*,0), "NAME" VARCHAR2(255), "SEASON" VARCHAR2(255))
+  CREATE TABLE "CATEGORIES" 
+   (	"ID" NUMBER(*,0), 
+	"NAME" VARCHAR2(255), 
+	"SEASON" VARCHAR2(255)
+   )
+--------------------------------------------------------
+--  DDL for Table PRODUCTS
+--------------------------------------------------------
+
+  CREATE TABLE "PRODUCTS" 
+   (	"ID" NUMBER(*,0), 
+	"NAME" VARCHAR2(255), 
+	"REFERENCE" VARCHAR2(255), 
+	"PRICE" NUMBER(10,3), 
+	"CATEGORY_ID" NUMBER(*,0)
+   )
 REM INSERTING into ANSWERS
 SET DEFINE OFF;
 Insert into ANSWERS (ID,NUMBER_OF_QUESTION,ANSWER) values ('1','QUESTION1','26');
@@ -123,6 +142,19 @@ Insert into ANSWERS (ID,NUMBER_OF_QUESTION,ANSWER) values ('2','QUESTION2','963'
 Insert into ANSWERS (ID,NUMBER_OF_QUESTION,ANSWER) values ('3','QUESTION3','10');
 Insert into ANSWERS (ID,NUMBER_OF_QUESTION,ANSWER) values ('4','QUESTION4','vel sapien');
 Insert into ANSWERS (ID,NUMBER_OF_QUESTION,ANSWER) values ('5','QUESTION5','swim wear');
+REM INSERTING into CATEGORIES
+SET DEFINE OFF;
+Insert into CATEGORIES (ID,NAME,SEASON) values ('1','shoes','winter');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('2','shoes','summer');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('3','swim wear','summer');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('4','tennis','summer');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('5','ski','winter');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('6','snowboard','winter');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('7','golf','summer');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('8','diving equipment','summer');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('9','running wear','summer');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('10','fitness gear','summer');
+Insert into CATEGORIES (ID,NAME,SEASON) values ('11','fitness gear','winter');
 REM INSERTING into PRODUCTS
 SET DEFINE OFF;
 Insert into PRODUCTS (ID,NAME,REFERENCE,PRICE,CATEGORY_ID) values ('1000','enim. Mauris','8C402EDA-D7D5-540D-3974-4EB9C810E3D6','10','5');
@@ -425,30 +457,11 @@ Insert into PRODUCTS (ID,NAME,REFERENCE,PRICE,CATEGORY_ID) values ('2480','odio 
 Insert into PRODUCTS (ID,NAME,REFERENCE,PRICE,CATEGORY_ID) values ('2485','nibh. Donec est','3707FDBC-5A23-CB84-1DB1-0EF42672DE3A','488','10');
 Insert into PRODUCTS (ID,NAME,REFERENCE,PRICE,CATEGORY_ID) values ('2490','et nunc.','913024EE-7FCF-5A35-FCD5-AC9F26C3AD98','792','9');
 Insert into PRODUCTS (ID,NAME,REFERENCE,PRICE,CATEGORY_ID) values ('2495','Quisque ornare','CEDE07B9-3D1F-851C-4589-C9F8B6DCB2C1','461','3');
-REM INSERTING into CATEGORIES
-SET DEFINE OFF;
-Insert into CATEGORIES (ID,NAME,SEASON) values ('1','shoes','winter');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('2','shoes','summer');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('3','swim wear','summer');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('4','tennis','summer');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('5','ski','winter');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('6','snowboard','winter');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('7','golf','summer');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('8','diving equipment','summer');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('9','running wear','summer');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('10','fitness gear','summer');
-Insert into CATEGORIES (ID,NAME,SEASON) values ('11','fitness gear','winter');
 --------------------------------------------------------
 --  Constraints for Table ANSWERS
 --------------------------------------------------------
 
   ALTER TABLE "ANSWERS" ADD PRIMARY KEY ("ID") ENABLE
---------------------------------------------------------
---  Constraints for Table PRODUCTS
---------------------------------------------------------
-
-  ALTER TABLE "PRODUCTS" ADD CONSTRAINT "CKPRICETABLE" CHECK (price > 0) ENABLE
-  ALTER TABLE "PRODUCTS" ADD PRIMARY KEY ("ID") ENABLE
 --------------------------------------------------------
 --  Constraints for Table CATEGORIES
 --------------------------------------------------------
@@ -456,7 +469,14 @@ Insert into CATEGORIES (ID,NAME,SEASON) values ('11','fitness gear','winter');
   ALTER TABLE "CATEGORIES" ADD CONSTRAINT "CKSEASONTABLE" CHECK (season in ('winter', 'summer', 'spring', 'autumn')) ENABLE
   ALTER TABLE "CATEGORIES" ADD PRIMARY KEY ("ID") ENABLE
 --------------------------------------------------------
+--  Constraints for Table PRODUCTS
+--------------------------------------------------------
+
+  ALTER TABLE "PRODUCTS" ADD CONSTRAINT "CKPRICETABLE" CHECK (price > 0) ENABLE
+  ALTER TABLE "PRODUCTS" ADD PRIMARY KEY ("ID") ENABLE
+--------------------------------------------------------
 --  Ref Constraints for Table PRODUCTS
 --------------------------------------------------------
 
-  ALTER TABLE "PRODUCTS" ADD CONSTRAINT "FK_CATEGORY" FOREIGN KEY ("CATEGORY_ID") REFERENCES "CATEGORIES" ("ID") ENABLE
+  ALTER TABLE "PRODUCTS" ADD CONSTRAINT "FK_CATEGORY" FOREIGN KEY ("CATEGORY_ID")
+	  REFERENCES "CATEGORIES" ("ID") ENABLE
