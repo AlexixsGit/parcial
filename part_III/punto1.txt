@@ -1,0 +1,2 @@
+SELECT COUNT(REFERENCE) FROM PRODUCTS where CATEGORY_ID in 
+(select id from CATEGORIES where CATEGORIES.NAME = 'shoes' and CATEGORIES.SEASON = 'summer');
